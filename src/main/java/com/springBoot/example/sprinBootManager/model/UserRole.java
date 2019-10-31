@@ -1,11 +1,13 @@
 package com.springBoot.example.sprinBootManager.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "roles")
-public class UserRole {
+public class UserRole implements GrantedAuthority {
 
     @Id
     @Column
@@ -21,7 +23,12 @@ public class UserRole {
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private List<User> users;
 
+
     public UserRole() {
+    }
+
+    public UserRole(String roleName) {
+        this.roleName = roleName;
     }
 
     public Integer getId() {
@@ -32,19 +39,20 @@ public class UserRole {
         this.id = id;
     }
 
-    public String getRoleName() {
+    @Override
+    public String getAuthority() {
         return roleName;
     }
 
-    public void setRoleName(String roleName) {
+    public void setAuthority(String roleName) {
         this.roleName = roleName;
     }
 
-    public List<User> getUsers() {
+    public List<User> getUser() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUser(List<User> users) {
         this.users = users;
     }
 }

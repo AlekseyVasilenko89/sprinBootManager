@@ -1,11 +1,13 @@
 package com.springBoot.example.sprinBootManager.model;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @Column(name = "id")
@@ -30,12 +32,10 @@ public class User {
     public User() {
     }
 
-    public User(User user) {
-        this.id = getId();
-        this.name = getName();
-        this.password = getPassword();
-        this.age = getAge();
-        this.userRoles = getUserRoles();
+    public User(String name, Integer age, String password, List<UserRole> roles) {
+        this.name = name;
+        this.age = age;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -46,11 +46,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
+    @Override
+    public String getUsername() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setUsername(String name) {
         this.name = name;
     }
 
@@ -58,7 +59,7 @@ public class User {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -66,16 +67,55 @@ public class User {
         return password;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public List<UserRole> getUserRoles() {
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public List<UserRole> getAuthorities() {
         return userRoles;
     }
 
-    public void setUserRoles(List<UserRole> userRoles) {
+    public void setAuthorities(List<UserRole> userRoles) {
         this.userRoles = userRoles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getAge() == user.getAge() &&
+                getUsername().equals(user.getUsername()) &&
+                getPassword().equals(user.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override
