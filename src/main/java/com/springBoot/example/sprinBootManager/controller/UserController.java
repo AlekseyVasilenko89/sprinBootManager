@@ -2,14 +2,14 @@ package com.springBoot.example.sprinBootManager.controller;
 
 import com.springBoot.example.sprinBootManager.model.User;
 import com.springBoot.example.sprinBootManager.model.UserRole;
-import com.springBoot.example.sprinBootManager.service.UserRoleService;
-import com.springBoot.example.sprinBootManager.service.UserService;
+import com.springBoot.example.sprinBootManager.service.UserRoleServiceImpl;
+import com.springBoot.example.sprinBootManager.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +17,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private UserService userService;
-    private UserRoleService userRoleService;
+    private UserServiceImpl userService;
+    private UserRoleServiceImpl userRoleService;
 
     @Autowired
-    public UserController(UserService userService, UserRoleService userRoleService) {
+    public UserController(UserServiceImpl userService, UserRoleServiceImpl userRoleService) {
         this.userRoleService = userRoleService;
         this.userService = userService;
     }
@@ -32,12 +32,17 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/showUsers", method = RequestMethod.GET)
-    public ModelAndView allUser(ModelAndView modelAndView) {
-        List<User> users = userService.getAll();
-        modelAndView.addObject("users", users);
-        modelAndView.setViewName("showUsers");
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView loginUsers(ModelAndView modelAndView) {
+        modelAndView.setViewName("login");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/showUsers", method = RequestMethod.GET)
+    public String allUser(ModelAndView modelAndView) {
+        modelAndView.addObject("users", userService.getAll());
+        modelAndView.setViewName("index");
+        return "index";
     }
 
     @RequestMapping(value = "/admin/update/{id}", method = RequestMethod.GET)
@@ -63,7 +68,7 @@ public class UserController {
             UserRole userRoleResult2 = userRoleService.getById(Integer.parseInt(userRole2));
             userRoles.add(userRoleResult2);
         }
-        user.setAuthorities(userRoles);
+        user.setUserRoles(userRoles);
         userService.update(user);
         System.out.println(user.toString());
         modelAndView.setViewName("redirect:/admin/showUsers");
@@ -87,7 +92,7 @@ public class UserController {
 
     @RequestMapping(value = "/admin/add", method = RequestMethod.GET)
     public ModelAndView addPage(ModelAndView modelAndView) {
-        modelAndView.setViewName("addPage");
+        modelAndView.setViewName("add-user");
         return modelAndView;
     }
 
@@ -104,7 +109,7 @@ public class UserController {
             UserRole userRoleResult2 = userRoleService.getById(Integer.parseInt(userRole2));
             userRoles.add(userRoleResult2);
         }
-        user.setAuthorities(userRoles);
+        user.setUserRoles(userRoles);
         userService.add(user);
         System.out.println(user.toString());
         modelAndView.setViewName("redirect:/admin/showUsers");

@@ -1,10 +1,10 @@
 package com.springBoot.example.sprinBootManager.service;
 
+import com.springBoot.example.sprinBootManager.dao.UserRoleDAO;
+import com.springBoot.example.sprinBootManager.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import preProject.dao.UserRoleDAO;
-import preProject.model.UserRole;
 
 import java.util.List;
 
@@ -45,12 +45,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public List<UserRole> getUserRoleByUserRoleName(String userRoleName) {
+    public UserRole getUserRoleByUserRoleName(String userRoleName) {
         return userRoleDAO.getUserRoleByUserRoleName(userRoleName);
-    }
-
-    @Override
-    public List<UserRole> getUserRoleByUserRoleName(String userRoleName1, String userRoleName2) {
-        return userRoleDAO.getUserRoleByUserRoleName(userRoleName1, userRoleName2);
     }
 }

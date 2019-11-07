@@ -16,7 +16,6 @@ public interface UserRoleService {
 
     void remove(UserRole user);
 
-    List<UserRole> getUserRoleByUserRoleName(String userRoleName);
+    UserRole getUserRoleByUserRoleName(String userRoleName);
 
-    List<UserRole> getUserRoleByUserRoleName(String name1, String name2);
 }

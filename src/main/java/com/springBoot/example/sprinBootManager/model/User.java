@@ -1,8 +1,10 @@
 package com.springBoot.example.sprinBootManager.model;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -38,6 +40,14 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public User(User user) {
+        this.id = user.getId();
+        this.name = user.getUsername();
+        this.password = user.getPassword();
+        this.age = user.getAge();
+        this.userRoles = (List<UserRole>) user.getAuthorities();
+    }
+
     public Integer getId() {
         return id;
     }
@@ -67,6 +77,18 @@ public class User implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public List<UserRole> getAuthorities() {
+        return userRoles;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -87,19 +109,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public List<UserRole> getAuthorities() {
-        return userRoles;
-    }
-
-    public void setAuthorities(List<UserRole> userRoles) {
+    public void setUserRoles(List<UserRole> userRoles) {
         this.userRoles = userRoles;
     }
 
