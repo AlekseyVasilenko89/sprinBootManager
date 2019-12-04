@@ -10,7 +10,7 @@ public interface UserService {
 
     void add(User user);
 
-    List<User> getAll();
+    List getAll();
 
     User getById(int id);
 

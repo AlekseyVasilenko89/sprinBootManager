@@ -5,7 +5,6 @@ import com.springBoot.example.sprinBootManager.model.UserRole;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         }
 
         if (isUser) {
-            response.sendRedirect("/user/forUsers");
+            response.sendRedirect("/user/forUsers/" + principal.getId());
         } else if (isAdmin) {
             response.sendRedirect("/admin/showUsers");
         } else if (isAnonymous) {

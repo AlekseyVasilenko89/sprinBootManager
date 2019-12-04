@@ -1,10 +1,9 @@
 package com.springBoot.example.sprinBootManager.model;
 
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -45,7 +44,7 @@ public class User implements UserDetails {
         this.name = user.getUsername();
         this.password = user.getPassword();
         this.age = user.getAge();
-        this.userRoles = (List<UserRole>) user.getAuthorities();
+        this.userRoles = user.getAuthorities();
     }
 
     public Integer getId() {

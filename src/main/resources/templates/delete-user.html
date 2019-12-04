@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<form th:action="@{'/admin/delete/' + ${user.id}}" th:object="${user}" th:method="POST">
+    Do you really want to remove the user <td th:text="${user.id}">Id</td>
+    <input th:type="submit" th:value="delete" />
+</form>
+</body>
+</html>

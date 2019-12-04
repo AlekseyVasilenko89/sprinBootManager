@@ -1,13 +1,46 @@
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<form action="#"
-      th:action="@{/update/{id}(id=${user.id})}"
-      th:object="${user}"
-      method="post">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Name">
-    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    <label for="email">Email</label>
-    <input type="text" th:field="*{email}" id="email" placeholder="Email">
-    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-    <input type="submit" value="Update User">
+<head>
+    <meta charset="UTF-8" />
+    <title>Update User</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Update User:</h1>
+
+<!--
+   In Thymeleaf the equivalent of
+   JSP's ${pageContext.request.contextPath}/edit.html
+   would be @{/edit.html}
+   -->
+
+<form th:action="@{'/admin/update/' + ${user.id}}"
+      th:object="${user}" method="POST">
+    <br/>
+    Name:
+    <input th:type="text" th:field="*{username}"  th:placeholder="*{getUsername()}" />
+    <br/>
+    Age:
+    <input th:type="text" th:field="*{age}" th:placeholder="*{getAge()}"/>
+    <br/>
+    Password:
+    <input th:type="password" th:field="*{password}" th:placeholder="*{getPassword()}"/>
+    <br/>
+
+    <input th:type="checkbox" th:name="roleUser" th:value="2" th:checked>USER
+    <input th:type="checkbox" th:name="roleAdmin" th:value="1">ADMIN
+    <br/>
+    <input th:type="submit" th:value="Update" />
 </form>
+
+<br/>
+
+<!-- Check if errorMessage is not null and not empty -->
+
+<!--<div th:if="${errorMessage}" th:utext="${errorMessage}"-->
+<!--style="color:red;font-style:italic;">-->
+<!--...-->
+<!--</div>-->
+
+</body>
+</html>
