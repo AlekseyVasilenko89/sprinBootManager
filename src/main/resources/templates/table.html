@@ -11,8 +11,8 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
-    <script type="text/javascript" src=src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="../js/script.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -70,180 +70,128 @@
             </div>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <table class="table">
-                        <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">All users</h4>
-                        </div>
-                        <tr>
-                            <td><strong>ID</strong></td>
-                            <td><strong>Имя</strong></td>
-                            <td><strong>Возраст</strong></td>
-                            <td><strong>Пароль</strong></td>
-                            <td><strong>Edit</strong></td>
-                        </tr>
-                        <tr th:each="user : ${users}">
-                            <td th:text="${user.id}">Id</td>
-                            <td th:text="${user.username}">Name</td>
-                            <td th:text="${user.age}">Age</td>
-                            <td th:text="${user.password }">Password</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        th:attr="data-target='#exampleModal'+${user.id}">
-                                    Edit
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        th:attr="data-target='#myModal'+${user.id}">
-                                    Delete
-                                </button>
+                    <div id="forJsScript">
 
-                                <!-- Modal -->
-                                <div class="modal fade" th:attr="id='exampleModal'+${user.id}" tabindex="-1"
-                                     role="dialog"
-                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form th:action="@{'/admin/update/' + ${user.id}}" method="post">
-                                                    <div class="row justify-content-center">
-                                                        <div class="form-group">
-                                                            <label>Name</label>
-                                                            <input type="text" class="form-control"
-                                                                   th:value="${user.username}"
-                                                                   th:placeholder="${user.getUsername()}"
-                                                                   name="username">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row justify-content-center">
-                                                        <div class="form-group">
-                                                            <label>Age</label>
-                                                            <input type="text" class="form-control"
-                                                                   th:value="${user.getAge()}"
-                                                                   th:placeholder="${user.getAge()}"
-                                                                   name="age">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row justify-content-center">
-                                                        <div class="form-group">
-                                                            <label>Password</label>
-                                                            <input type="password" class="form-control"
-                                                                   th:placeholder="${user.getPassword()}"
-                                                                   name="password">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row justify-content-center">
-                                                        <div class="form-group form-check">
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                       name="roleAdmin"
-                                                                       value="1">
-                                                                <label class="form-check-label"
-                                                                       for="inlineCheckbox1">Admin</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                       name="roleUser"
-                                                                       value="2">
-                                                                <label class="form-check-label"
-                                                                       for="inlineCheckbox2">User</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">
-                                                            Cancel
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">Edit user</button>
-                                                    </div>
-                                                </form>
+                    </div>
+
+                    <!-- Modal -->
+                    <div id="modalEditUser" class="modal fade" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLongTitle"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form class="form formForJs">
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Id</label>
+                                            <div class="col-sm-10">
+                                                <input id="id" class="form-control idForJs" type="text" value=""
+                                                       readonly/>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <!-- ModalDelete -->
-                                <div class="modal fade" th:attr="id='myModal'+${user.id}" tabindex="-1" role="dialog"
-                                     aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="myModalLabel">Edit user</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form th:action="@{'/admin/delete/'+${user.id}}" method="post">
-                                                    <div class="row justify-content-center">
-                                                        <div>
-                                                            <label>Do you wanted delete user <a
-                                                                    th:text="${user.id}"></a>?</label>
-                                                            <input type="hidden" name="id" th:value="${user.id}">
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal">Close
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">Delete user
-                                                        </button>
-                                                    </div>
-                                                </form>
+
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                            <div class="col-sm-10">
+                                                <input id="nameEdit" class="form-control nameForJs" type="text"
+                                                       name="name" value=""><br/>
                                             </div>
                                         </div>
-                                    </div>
+
+                                        <div class="form-group row">
+                                            <label for="password" class="col-sm-2 col-form-label">Password</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control passwordForJs" type="text" id="passwordEdit"><br/>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="age" class="col-sm-2 col-form-label">Age</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control ageForJs" type="text" id="ageEdit"
+                                                       value=""><br/>
+                                            </div>
+                                        </div>
+
+                                        <div class="row justify-content-center">
+                                            <div class="form-group form-check">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3"
+                                                           value="1">
+                                                    <label class="form-check-label" for="inlineCheckbox1">Admin</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4"
+                                                           value="2" checked>
+                                                    <label class="form-check-label" for="inlineCheckbox2">User</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <sub class="btn btn-secondary" data-dismiss="modal">Cancel
+                                            </sub>
+                                            <sub id="editUser" class="btn btn-primary" data-dismiss="modal">Edit user
+                                            </sub>
+                                        </div>
+                                    </form>
                                 </div>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="card-header">
                         <h4 class="my-0 font-weight-normal">Add new user</h4>
                     </div>
-                    <form action="/admin/add" method="post">
+                    <form id="addForm">
                         <div class="row justify-content-center">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control" id="nane" placeholder="Name" name="username">
+                                <input type="text" class="form-control" id="name" placeholder="Name">
                             </div>
                         </div>
                         <div class="row justify-content-center">
                             <div class="form-group">
                                 <label>Age</label>
-                                <input type="text" class="form-control" id="age" placeholder="Age" name="age">
+                                <input type="text" class="form-control" id="age" placeholder="Age">
                             </div>
                         </div>
                         <div class="row justify-content-center">
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Password"
-                                       name="password">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
                             </div>
                         </div>
                         <div class="row justify-content-center">
                             <div class="form-group form-check">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                           name="roleAdmin" value="1">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="1">
                                     <label class="form-check-label" for="inlineCheckbox1">Admin</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="roleUser"
-                                           value="2" checked>
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="2"
+                                           checked>
                                     <label class="form-check-label" for="inlineCheckbox2">User</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-primary">Add new user</button>
+                            <sub class="btn btn-secondary" data-dismiss="modal">Cancel
+                            </sub>
+                            <sub id="addUser" class="btn btn-primary"
+                                 data-dismiss="modal">Add user
+                            </sub>
                         </div>
                     </form>
                 </div>

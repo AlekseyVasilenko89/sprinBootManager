@@ -1,5 +1,6 @@
 package com.springBoot.example.sprinBootManager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -9,6 +10,8 @@ import java.util.List;
 @Table(name = "roles")
 public class UserRole implements GrantedAuthority {
 
+    private static final long serialVersionUID = 1;
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +20,12 @@ public class UserRole implements GrantedAuthority {
     @Column(name = "role_name")
     private String roleName;
 
-    @ManyToMany
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "roles_id"),
-            inverseJoinColumns = @JoinColumn(name = "users_id"))
-    private List<User> users;
+//    @JsonIgnore
+//    @ManyToMany()
+//    @JoinTable(name = "users_roles",
+//            joinColumns = @JoinColumn(name = "roles_id"),
+//            inverseJoinColumns = @JoinColumn(name = "users_id"))
+//    private List<User> users;//delete
 
 
     public UserRole() {
@@ -48,11 +52,11 @@ public class UserRole implements GrantedAuthority {
         this.roleName = roleName;
     }
 
-    public List<User> getUser() {
-        return users;
-    }
-
-    public void setUser(List<User> users) {
-        this.users = users;
-    }
+//    public List<User> getUser() {
+//        return users;
+//    }
+//
+//    public void setUser(List<User> users) {
+//        this.users = users;
+//    }
 }

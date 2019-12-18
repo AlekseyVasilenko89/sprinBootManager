@@ -1,6 +1,5 @@
 package com.springBoot.example.sprinBootManager.model;
 
-import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
